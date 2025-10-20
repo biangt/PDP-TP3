@@ -1,0 +1,25 @@
+{
+  "name": "aprendiendo3",
+  "version": "1.0.0",
+  "description": "Gestor de Tareas OOP con TypeScript Prototypes",
+  "main": "dist/main.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "npm run build && node dist/main.js"
+  },
+  "keywords": [
+    "typescript",
+    "oop",
+    "prototypes"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "prompt-sync": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/prompt-sync": "^4.2.3",
+    "typescript": "^5.0.4"
+  }
+}
