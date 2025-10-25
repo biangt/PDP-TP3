@@ -1,6 +1,7 @@
+//este archivo es para gestionar tareas
 import { Tarea } from "./tareas.js";
 import { Estado, Dificultad } from "./types.js";
-import { formatoFecha, control } from "./utils.js";
+import { control } from "./utils.js";
 import promptSync from "prompt-sync";
 const prompt = promptSync({ sigint: true });
 /**
@@ -42,18 +43,20 @@ export function editarTarea(indice, arrTareas) {
         entrada = control(entrada);
         arrTareas[indice - 1].setEstado(parseInt(entrada));
     }
-    entrada = prompt(`Ingrese nueva fecha de vencimiento: (formato: aaaa/mm/dd): `);
+    entrada = prompt(`Ingrese nueva fecha de vencimiento: (formato: aaaa-mm-dd): `);
     tempFecha = new Date(entrada);
     if (entrada === " ") {
-        arrTareas[indice - 1].setFechaVencimiento("Sin datos");
+        // Fecha vacía → usamos una por defecto
+        arrTareas[indice - 1].setFechaVencimiento(new Date("9999-12-31"));
     }
     else if (isNaN(tempFecha.getTime())) {
         console.log("Fecha inválida, se guardará como 'Sin Datos'");
-        arrTareas[indice - 1].setFechaVencimiento("Sin datos");
+        arrTareas[indice - 1].setFechaVencimiento(new Date("9999-12-31"));
     }
     else {
-        arrTareas[indice - 1].setFechaVencimiento(formatoFecha(tempFecha));
+        arrTareas[indice - 1].setFechaVencimiento(tempFecha);
     }
+    arrTareas[indice - 1].setFechaEdicion(new Date()); //actualiza la fecha de edición
     console.log("Tarea editada con éxito!");
     console.log("Presione enter para continuar");
     prompt("");

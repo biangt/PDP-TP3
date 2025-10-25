@@ -1,6 +1,8 @@
+//este archivo es para gestionar listas de tareas
 import promptSync from 'prompt-sync';
 import { Estado } from './types.js';
 import { editarTarea } from './gestorTareas.js';
+import { mostrarDificultad, estadoATexto } from './utils.js';
 
 const prompt = promptSync({ sigint: true });
 
@@ -13,7 +15,7 @@ export function agregarTareaALista(arr: any[], tarea: any): void {
 export function verTareaFiltro(arr: any[], estadoBuscado: Estado): void {
     let bandera = false;
     for (let i = 0; i < arr.length; i++) {
-        if (arr[i].getEstado() === estadoBuscado + 1) {
+        if (arr[i].getEstado() === estadoBuscado) {
           console.log(`Tarea N° [${i + 1}]: ${arr[i].getNombre()}`);
           bandera = true;
         }
@@ -39,8 +41,8 @@ export function buscarTarea(arr: any[], entrada: string): void {
     let bandera: boolean = false;
     entrada = entrada.toLowerCase();
     for (let i = 0; i < arr.length; i++) {
-        if (arr[i].nombre.toLowerCase().indexOf(entrada) !== -1) {
-            console.log(`Tarea N° [${i + 1}]: ${arr[i].nombre}`);
+        if (arr[i].getNombre().toLowerCase().indexOf(entrada) !== -1) {
+            console.log(`Tarea N° [${i + 1}]: ${arr[i].getNombre()}`);
             bandera = true;
         }
     }
@@ -61,18 +63,14 @@ export function detalleTarea(arrTareas: any[]): void {
     if (opMenuesAdentro !== 0) {
         
         const tarea = arrTareas[opMenuesAdentro - 1];
-        const fechaVto = tarea.getFechaVencimiento();
-        console.log(`Nombre: ${tarea.getNombre()}`);
-        console.log(`Descripción: ${tarea.getDescripcion()}`);
-        if (isNaN(tarea.getFechaVencimiento())) {
-          console.log(`Fecha de vencimiento: Sin datos`);
-        } else {
-         console.log(`Fecha de vencimiento: ${fechaVto.toLocaleDateString()}`);
-        }
-        console.log(`Fecha de edición: ${tarea.getFechaEdicion()}`);
-        console.log(`Fecha de creación: ${tarea.getFechaCreacion()}`);
-        console.log(`Dificultad: ${tarea.getDificultad()}`);
-        console.log(`Estado: ${tarea.getEstado()}`);
+const fechaVto = tarea.getFechaVencimiento();
+console.log(`Nombre: ${tarea.getNombre()}`);
+console.log(`Descripción: ${tarea.getDescripcion()}`);
+console.log(`Fecha de vencimiento: ${fechaVto}`); // Ya viene formateado como string
+console.log(`Fecha de edición: ${tarea.getFechaEdicion()}`);
+console.log(`Fecha de creación: ${tarea.getFechaCreacion()}`);
+console.log(`Dificultad: ${mostrarDificultad(tarea.getDificultad())}`);
+console.log(`Estado: ${estadoATexto(tarea.getEstado())}`);
         
         entrada = prompt("Presione enter para continuar o E para editar la tarea: ");
 

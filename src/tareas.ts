@@ -1,3 +1,4 @@
+//este es archvo tareas
 import { Dificultad, Estado } from "./types.js";
 import { formatoFecha, formatoFechaEdicion } from "./utils.js";
 
@@ -46,7 +47,6 @@ export class Tarea implements ITarea {
 
   setNombre(n: string): void {
     this.#nombre = n;
-    this.#fechaEdicion = new Date();
   }
 
   getDescripcion(): string {
@@ -55,7 +55,6 @@ export class Tarea implements ITarea {
 
   setDescripcion(d: string): void {
     this.#descripcion = d;
-    this.#fechaEdicion = new Date();
   }
 
   getDificultad(): Dificultad {
@@ -64,7 +63,6 @@ export class Tarea implements ITarea {
 
   setDificultad(d: Dificultad): void {
     this.#dificultad = d;
-    this.#fechaEdicion = new Date();
   }
 
   getEstado(): Estado {
@@ -73,23 +71,32 @@ export class Tarea implements ITarea {
 
   setEstado(e: Estado): void {
     this.#estado = e;
-    this.#fechaEdicion = new Date();
   }
 
   getFechaCreacion(): string {
     return formatoFecha(this.#fechaCreacion);
   }
 
+  setFechaEdicion(fecha: Date): void {
+  this.#fechaEdicion = fecha;
+  }
+
+
   getFechaEdicion(): string {
     return formatoFechaEdicion(this.#fechaEdicion);
   }
 
-  getFechaVencimiento(): string {
+ getFechaVencimiento(): string {
+    // Solo necesita chequear el año 9999, porque main.ts ya validó
+    if (this.#fechaVencimiento.getFullYear() === 9999) {
+        return "Sin datos";
+    }
+    // Si no es 9999, es una fecha válida
     return formatoFecha(this.#fechaVencimiento);
-  }
+}
+
 
   setFechaVencimiento(f: Date): void {
     this.#fechaVencimiento = f;
-    this.#fechaEdicion = new Date();
   }
 }
